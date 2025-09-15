@@ -36,7 +36,7 @@ model User {
   IsVerified Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
+  post Post[]
 }
   
 model Post {
@@ -48,6 +48,7 @@ model Post {
   tags String[]
   views Int @default(0)
   authorId Int @default(0)
+  author User @relation(fields: [authorId],references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
