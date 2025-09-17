@@ -76,12 +76,20 @@ const getAllPost = async ({
 };
 
 const getPostById = async (id: number) => {
-  const result = await prisma.post.findUnique({
-    where: { id },
-    include: { author: true },
+  return await prisma.$transaction(async (tx) => {
+    await tx.post.update({
+      where: { id },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    });
+    return await tx.post.findUnique({
+      where: { id },
+      include: { author: true },
+    });
   });
-  //   console.log(payload);
-  return result;
 };
 const deletePost = async (id: number) => {
   const result = await prisma.post.delete({
