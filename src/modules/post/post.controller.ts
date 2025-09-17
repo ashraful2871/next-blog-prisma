@@ -15,7 +15,15 @@ const getAllPost = async (req: Request, res: Response) => {
     const page = Number(req.query.page || 1);
     const limit = Number(req.query.limit || 10);
     const search = (req.query.search as string) || "";
-    const result = await postService.getAllPost({ page, limit, search });
+    const IsFeatured = req.query.IsFeatured
+      ? req.query.IsFeatured === "true"
+      : undefined;
+    const result = await postService.getAllPost({
+      page,
+      limit,
+      search,
+      IsFeatured,
+    });
     res.status(201).json(result);
   } catch (error) {
     res.status(500).json(error);
