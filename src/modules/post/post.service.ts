@@ -10,14 +10,6 @@ const createPost = async (payload: Prisma.PostCreateInput): Promise<Post> => {
           id: true,
           name: true,
           email: true,
-          role: true,
-          phone: true,
-          picture: true,
-          status: true,
-          IsVerified: true,
-          createdAt: true,
-          updatedAt: true,
-          post: true,
         },
       },
     },
@@ -25,4 +17,46 @@ const createPost = async (payload: Prisma.PostCreateInput): Promise<Post> => {
   //   console.log(payload);
   return createdPost;
 };
-export const postService = { createPost };
+
+const getAllPost = async ({ page, limit }: { page: number; limit: number }) => {
+  const skip = (page - 1) * page;
+  const result = await prisma.post.findMany({
+    skip,
+    take: limit,
+  });
+  //   console.log(payload);
+  return result;
+};
+
+const getPostById = async (id: number) => {
+  const result = await prisma.post.findUnique({
+    where: { id },
+    include: { author: true },
+  });
+  //   console.log(payload);
+  return result;
+};
+const deletePost = async (id: number) => {
+  const result = await prisma.post.delete({
+    where: { id },
+  });
+  //   console.log(payload);
+  return result;
+};
+
+const updatePost = async (id: number, data: Partial<any>) => {
+  const result = await prisma.post.update({
+    where: { id },
+    data,
+  });
+  //   console.log(payload);
+  return result;
+};
+
+export const postService = {
+  createPost,
+  getAllPost,
+  getPostById,
+  deletePost,
+  updatePost,
+};
