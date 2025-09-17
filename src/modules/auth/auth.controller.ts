@@ -11,5 +11,13 @@ const loginWithEmailAndPAssword = async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 };
+const authWithGoogle = async (req: Request, res: Response) => {
+  try {
+    const result = await authServices.authWithGoogle(req.body);
+    res.status(201).json(result);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
 
-export const authController = { loginWithEmailAndPAssword };
+export const authController = { loginWithEmailAndPAssword, authWithGoogle };
