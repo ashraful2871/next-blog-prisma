@@ -1,4 +1,5 @@
 
+
 # Next Blog Starter
 
 A simple **Blog Application Starter Pack** built with **TypeScript, Express.js**.  
