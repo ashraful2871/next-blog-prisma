@@ -8,7 +8,7 @@ const loginWithEmailAndPAssword = async ({
   email: string;
   password: string;
 }) => {
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: {
       email,
     },
@@ -25,7 +25,7 @@ const loginWithEmailAndPAssword = async ({
   }
 };
 const authWithGoogle = async (data: Prisma.UserCreateInput) => {
-  let user = await prisma.user.findUnique({
+  let user = await prisma.user.findFirst({
     where: {
       email: data.email,
     },
